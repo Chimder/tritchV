@@ -1,11 +1,19 @@
+import { getEmotes, getUserById } from '@/shared/api/axios'
 import { Emotes, TwitchUser } from '@/shared/api/types'
+import { useQuery } from '@tanstack/react-query'
+import { useParams } from 'react-router-dom'
 
 interface Props {
   user?: TwitchUser
   emotes: Emotes[]
 }
 
-export const StreamerInfo = ({ user, emotes }: Props) => {
+export const StreamerInfo = () => {
+  const params = useParams()
+  const id = params?.id as string
+  const { data: user } = useQuery({ queryKey: ['User', id], queryFn: () => getUserById(id) })
+  const { data: emotes } = useQuery({ queryKey: ['Emotes', id], queryFn: () => getEmotes(id) })
+
   const getRandomPosition = () => ({
     top: `${Math.random() * 32}vh`,
     left: `${Math.random() * 98}vw`,

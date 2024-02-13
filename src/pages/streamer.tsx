@@ -15,10 +15,10 @@ export interface LoaderStreamerData {
 }
 
 const Streamer = () => {
-  const { user, emotes } = useLoaderData() as LoaderStreamerData
+  // const { user, emotes } = useLoaderData() as LoaderStreamerData
   return (
     <article className="overflow-hidden">
-      <StreamerInfo user={user} emotes={emotes} />
+      <StreamerInfo />
       <StreamerVideos />
     </article>
   )
