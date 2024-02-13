@@ -1,10 +1,9 @@
-import { lazy, Suspense } from 'react'
+import { lazy } from 'react'
 import { getEmotes, getTopGames, getUserById, getUserClips } from '@/shared/api/axios'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import Layout from '@/app/routes/layout'
 
-import Loading from '../../components/Loading'
 import { PATH } from './path-constants'
 
 const Home = lazy(() => import('@/pages/home'))
@@ -16,11 +15,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: PATH.HOME,
-        element: (
-          <Suspense fallback={<Loading />}>
-            <Home />
-          </Suspense>
-        ),
+        element: <Home />,
         loader: async () => {
           const load = await getTopGames()
           return load
@@ -28,15 +23,9 @@ export const router = createBrowserRouter([
       },
       {
         path: PATH.STREAMER,
-        element: (
-          <Suspense fallback={<Loading />}>
-            <Steamer />
-          </Suspense>
-        ),
+        element: <Steamer />,
         loader: async ({ params }) => {
-          // const [user,emotes] = Promise.all
-          const user = await getUserById(params?.id)
-          const emotes = await getEmotes(params?.id)
+          const [user, emotes] = await Promise.all([getUserById(params?.id), getEmotes(params?.id)])
           return { user, emotes }
         },
       },
