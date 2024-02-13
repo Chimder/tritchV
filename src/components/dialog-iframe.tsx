@@ -23,22 +23,22 @@ const DialogIframe = ({ url, clsn, children, name, type, videoId }: Props) => {
             <>
               <iframe
                 className="mt-3 h-[74vh] w-[64vw] pr-2 xl:h-[68vh] xl:w-[70vw] lg:mt-1 lg:h-[57vh] lg:w-[86vw] md:h-[49vh] sm:h-[36vh] sm:w-[94vw]"
-                src={`https://player.twitch.tv/?channel=${name}&autoplay=1&muted=1&parent=localhost&parent=twitchersapp.vercel.app`}
+                src={`https://player.twitch.tv/?channel=${name}&autoplay=1&muted=1&parent=localhost&parent=tritch-vite.vercel.app`}
               ></iframe>
               <iframe
                 className="mt-3 h-[74vh] w-[18vw] rounded-2xl xl:h-[68vh] lg:hidden"
-                src={`https://www.twitch.tv/embed/${name}/chat?parent=localhost&parent=twitchersapp.vercel.app&darkpopout`}
+                src={`https://www.twitch.tv/embed/${name}/chat?parent=localhost&parent=tritch-vite.vercel.app&darkpopout`}
               ></iframe>
             </>
           ) : type === 'offline' ? (
             <iframe
               className="iframeOC"
-              src={`https://player.twitch.tv/?video=v${name}&parent=localhost&parent=twitchersapp.vercel.app&autoplay=true`}
+              src={`https://player.twitch.tv/?video=v${name}&parent=localhost&parent=tritch-vite.vercel.app&autoplay=true`}
             ></iframe>
           ) : (
             <iframe
               className="iframeOC "
-              src={`${url}&parent=localhost&parent=twitchersapp.vercel.app`}
+              src={`${url}&parent=localhost&parent=tritch-vite.vercel.app`}
             ></iframe>
           )}
         </div>
