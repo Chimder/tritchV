@@ -2,11 +2,9 @@ import { lazy } from 'react'
 import { Emotes, TwitchUser } from '@/shared/api/types'
 import { useLoaderData } from 'react-router-dom'
 
-import { StreamerInfo } from '@/components/Streamer-info'
+import StreamerInfo from '@/components/Streamer-info'
 
 const StreamerVideos = lazy(() => import('@/components/Streamer-video'))
-
-// import { StreamerVideos } from '@/components/Streamer-video'
 
 export interface LoaderStreamerData {
   user: TwitchUser
@@ -15,10 +13,10 @@ export interface LoaderStreamerData {
 }
 
 const Streamer = () => {
-  // const { user, emotes } = useLoaderData() as LoaderStreamerData
+  const { user, emotes } = useLoaderData() as LoaderStreamerData
   return (
     <article className="overflow-hidden">
-      <StreamerInfo />
+      <StreamerInfo user={user} emotes={emotes} />
       <StreamerVideos />
     </article>
   )
