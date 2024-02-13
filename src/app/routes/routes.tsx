@@ -1,10 +1,9 @@
-import { lazy, Suspense } from 'react'
-import { getEmotes, getTopGames, getUserById, getUserClips } from '@/shared/api/axios'
+import { lazy } from 'react'
+import { getEmotes, getTopGames, getUserById } from '@/shared/api/axios'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import Layout from '@/app/routes/layout'
 
-import Loading from '../../components/Loading'
 import { PATH } from './path-constants'
 
 const Home = lazy(() => import('@/pages/home'))
