@@ -5,9 +5,9 @@ import { Button } from '@/components/ui/button'
 import { DialogInput } from '@/components/dialog-search'
 import EmblaCarousel from '@/components/EmblaCarousel'
 
-function Home() {
+export default function Home() {
   const games = useLoaderData()
-  console.log('GAME', games)
+
   return (
     <main className="h-[2000px] overflow-hidden">
       <section className="w-full">
@@ -38,5 +38,3 @@ function Home() {
     </main>
   )
 }
-
-export default Home

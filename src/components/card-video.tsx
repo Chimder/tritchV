@@ -1,4 +1,3 @@
-import React from 'react'
 import { TwitchVideo } from '@/shared/api/types'
 import { formatCreatedAt } from '@/shared/lib/data-forma'
 import { EyeOpenIcon } from '@radix-ui/react-icons'
@@ -42,6 +41,7 @@ const CardVideo = ({ video, type }: Props) => {
                 </Badge>
               </Badge>
             </div>
+
             <div className="mx-1 flex h-2 items-center  rounded-full text-white">
               <span className="font-bold">
                 {type === 'stream' && (

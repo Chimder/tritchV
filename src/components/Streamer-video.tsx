@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { getVideosByUserId } from '@/shared/api/axios'
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
-import { AnimatePresence, motion } from 'framer-motion'
+import { useInfiniteQuery } from '@tanstack/react-query'
+import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { useParams } from 'react-router-dom'
 
@@ -65,7 +65,7 @@ export default function StreamerVideos() {
         </div>
         <div className="gridCard">
           {isRefetching
-            ? Array.from({ length: 40 }, (_, index) => (
+            ? Array.from({ length: 80 }, (_, index) => (
                 <React.Fragment key={`skeleton-${index}`}>
                   <motion.div
                     initial={{ opacity: 0.7, scale: 1 }}
@@ -85,34 +85,14 @@ export default function StreamerVideos() {
                 <motion.div
                   ref={ref}
                   key={video.id}
-                  initial={{ opacity: 0.9, scale: 1 }}
-                  exit={{ opacity: 0.5, scale: 0.9 }}
-                  transition={{ duration: 0.4 }}
+                  initial={{ opacity: 0.7, scale: 1 }}
+                  exit={{ opacity: 0.6, scale: 1 }}
+                  transition={{ duration: 1 }}
                   animate="visible"
                 >
                   <CardVideo key={video.id} type={type} video={video}></CardVideo>
                 </motion.div>
               ))}
-
-          <AnimatePresence>
-            {isFetchingNextPage &&
-              Array.from({ length: 40 }, (_, index) => (
-                <React.Fragment key={`skeleton-${index}`}>
-                  <motion.div
-                    initial={{ opacity: 1, scale: 1 }}
-                    animate="visible"
-                    exit={{ opacity: 0.1, scale: 1 }}
-                    transition={{ duration: 0.4 }}
-                    className="relative mr-4 w-full overflow-hidden rounded-2xl"
-                    style={{ paddingBottom: '52%' }}
-                  >
-                    <div className="absolute inset-0 px-3">
-                      <Skeleton className="h-full w-full" />
-                    </div>
-                  </motion.div>
-                </React.Fragment>
-              ))}
-          </AnimatePresence>
         </div>
       </div>
     </section>
