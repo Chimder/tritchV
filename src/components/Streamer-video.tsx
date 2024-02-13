@@ -9,7 +9,7 @@ import CardVideo from './card-video'
 import { Button } from './ui/button'
 import { Skeleton } from './ui/skeleton'
 
-export default function StreamerVideos() {
+const StreamerVideos = () => {
   const params = useParams()
   const id = params?.id as string
   const [type, setType] = useState<'offline' | 'stream' | 'clips'>('offline')
@@ -98,3 +98,5 @@ export default function StreamerVideos() {
     </section>
   )
 }
+
+export default StreamerVideos

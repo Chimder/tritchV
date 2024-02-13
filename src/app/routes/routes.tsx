@@ -33,11 +33,12 @@ export const router = createBrowserRouter([
             <Steamer />
           </Suspense>
         ),
-        // loader: async ({ params }) => {
-        //   const user = await getUserById(params?.id)
-        //   const emotes = await getEmotes(params?.id)
-        //   return { user, emotes }
-        // },
+        loader: async ({ params }) => {
+          // const [user,emotes] = Promise.all
+          const user = await getUserById(params?.id)
+          const emotes = await getEmotes(params?.id)
+          return { user, emotes }
+        },
       },
     ],
   },
