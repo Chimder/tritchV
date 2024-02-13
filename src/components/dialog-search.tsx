@@ -1,5 +1,3 @@
-'use client'
-
 import { PropsWithChildren, useEffect, useState } from 'react'
 import { searchChannels } from '@/shared/api/axios'
 import { useDebouncedValue } from '@mantine/hooks'
