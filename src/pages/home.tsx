@@ -1,5 +1,5 @@
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
-import { useLoaderData } from 'react-router-dom'
+import { ScrollRestoration, useLoaderData } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
 import { DialogInput } from '@/components/dialog-search'
@@ -10,6 +10,7 @@ export default function Home() {
 
   return (
     <main className="h-[2000px] overflow-hidden">
+      <ScrollRestoration />
       <section className="w-full">
         <div className="flex flex-col items-center justify-end bg-background pb-10 pt-24 md:py-12">
           <div className="flex flex-col items-center justify-center ">

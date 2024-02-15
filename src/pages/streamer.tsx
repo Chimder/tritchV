@@ -1,6 +1,6 @@
 import { lazy } from 'react'
 import { Emotes, TwitchUser } from '@/shared/api/types'
-import { useLoaderData } from 'react-router-dom'
+import { ScrollRestoration, useLoaderData } from 'react-router-dom'
 
 import StreamerInfo from '@/components/Streamer-info'
 
@@ -14,8 +14,10 @@ export interface LoaderStreamerData {
 
 const Streamer = () => {
   const { user, emotes } = useLoaderData() as LoaderStreamerData
+
   return (
     <article className="overflow-hidden">
+      <ScrollRestoration />
       <StreamerInfo user={user} emotes={emotes} />
       <StreamerVideos />
     </article>
