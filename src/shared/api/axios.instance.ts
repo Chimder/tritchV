@@ -1,6 +1,6 @@
 import Axios, { AxiosError, AxiosRequestConfig } from 'axios'
 
-const url = process.env.NEXT_PUBLIC_API
+const url = process.env.NEST_API
 export const AXIOS_INSTANCE = Axios.create({
   baseURL: url?.toString(),
   headers: {
