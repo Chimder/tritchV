@@ -1,4 +1,5 @@
 import { lazy } from 'react'
+import Auth from '@/pages/auth'
 import { getEmotes, getTopGames, getUserById, getUserClips } from '@/shared/api/axios'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
@@ -28,6 +29,10 @@ export const router = createBrowserRouter([
           const [user, emotes] = await Promise.all([getUserById(params?.id), getEmotes(params?.id)])
           return { user, emotes }
         },
+      },
+      {
+        path: PATH.AUTH,
+        element: <Auth />,
       },
     ],
   },
