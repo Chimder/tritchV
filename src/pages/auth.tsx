@@ -1,30 +1,11 @@
-import { useEffect } from 'react'
-import {
-  authControllerGetSessionInfo,
-  authControllerSingIn,
-  authControllerSingOut,
-  authControllerSingUp,
-} from '@/shared/api/generated'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { authControllerSingIn, authControllerSingOut } from '@/shared/api/generated'
+import { useMutation } from '@tanstack/react-query'
 
 import { Button } from '@/components/ui/button'
 
-type Props = {}
-
-export default function Auth(props: Props) {
-  // const data = authControllerSingUp({ email: 'dimas.kirilyuk@gmail.com', password: 'dimas' })
-
-  // console.log('Auth', data)
-  useEffect(() => {
-    const a = () => {
-      const al = authControllerSingIn({ email: 'dimas.kirilyuk@gmail.com', password: '123' })
-      return al
-    }
-
-    a()
-  }, [])
+const Auth = () => {
   const { mutate } = useMutation({
-    mutationKey: ['s'],
+    mutationKey: ['login'],
     mutationFn: ({ email, password }: { email: string; password: string }) =>
       authControllerSingIn({ email: email, password: password }),
   })
@@ -32,7 +13,6 @@ export default function Auth(props: Props) {
     mutationKey: ['ss'],
     mutationFn: () => authControllerSingOut(),
   })
-  const { data } = useQuery({ queryKey: ['3423'], queryFn: () => authControllerGetSessionInfo() })
   return (
     <>
       <Button
@@ -44,7 +24,9 @@ export default function Auth(props: Props) {
       <Button className="mt-60" onClick={() => out()}>
         out
       </Button>
-      <div className="mt-65 text-white">{data?.email} lol</div>
+      <div className="mt-65 text-white"> lol</div>
     </>
   )
 }
+
+export default Auth
