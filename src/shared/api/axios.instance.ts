@@ -25,7 +25,13 @@
 
 import Axios, { AxiosError, AxiosRequestConfig } from 'axios'
 
-export const AXIOS_INSTANCE = Axios.create({ baseURL: 'https://sore-gray-pelican-wear.cyclic.app' })
+export const AXIOS_INSTANCE = Axios.create({
+  baseURL: 'http://[::1]:4000',
+  withCredentials: true,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+})
 
 export const customInstance = <T>(
   config: AxiosRequestConfig,
