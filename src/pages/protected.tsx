@@ -19,7 +19,7 @@ export function ProtectedPage({ children }: PropsWithChildren<ProtectedPageProps
     queryKey: ['login'],
     queryFn: () => authControllerGetSessionInfo(),
     retry: 0,
-    staleTime: 30 * 60 * 1000,
+    staleTime: 30 * 1000,
   })
   console.log('SessSion', session)
   // if (session === undefined) {
