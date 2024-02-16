@@ -26,7 +26,7 @@ import Axios, { AxiosError, AxiosRequestConfig } from 'axios'
 const url = process.env.NEST_API
 
 export const AXIOS_INSTANCE = Axios.create({
-  baseURL: url,
+  baseURL: 'https://sore-gray-pelican-wear.cyclic.app',
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
