@@ -8,10 +8,6 @@ import { useNavigate } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
 
-function deleteTokenCookie() {
-  document.cookie =
-    'access-token-tritch=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; SameSite=None; Secure;'
-}
 const Auth = () => {
   const queryClient = useQueryClient()
   const { mutate } = useMutation({
@@ -28,10 +24,10 @@ const Auth = () => {
   const { mutate: out } = useMutation({
     mutationKey: ['ss'],
     mutationFn: () => authControllerSingOut(),
-    onSuccess() {
-      queryClient.removeQueries({ queryKey: ['in'], exact: true })
-      deleteTokenCookie()
-    },
+    // onSuccess() {
+    //   queryClient.removeQueries({ queryKey: ['in'], exact: true })
+    //   deleteTokenCookie()
+    // },
   })
   return (
     <>
