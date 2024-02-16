@@ -1,10 +1,6 @@
-class DASHBOARD {
-  private root = '/'
-
-  HOME = this.root
-
-  STREAMER = `${this.root}/streamer/:id`
-  AUTH = `${this.root}/auth`
+export const PATH = {
+  HOME: '/',
+  STREAMER: '/streamer/:id',
+  AUTH: '/auth',
+  SECURE: '/test',
 }
-
-export const PATH = new DASHBOARD()

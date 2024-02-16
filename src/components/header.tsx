@@ -10,6 +10,12 @@ const Header = () => {
       <Link preventScrollReset={false} className="flex items-center pl-24" to={PATH.HOME}>
         HOME
       </Link>
+      <Link preventScrollReset={false} className="flex items-center pl-24" to={PATH.AUTH}>
+        auth
+      </Link>
+      <Link preventScrollReset={false} className="flex items-center pl-24" to={PATH.SECURE}>
+        secure
+      </Link>
       <div className="flex items-center  pr-24">{/* <ModeToggle /> */}</div>
     </header>
   )
