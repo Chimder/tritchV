@@ -1,12 +1,14 @@
 import { lazy } from 'react'
 import Auth from '@/pages/auth'
-import { ProtectedPage } from '@/pages/protected'
 import Test from '@/pages/test'
-import { getEmotes, getTopGames, getUserById, getUserClips } from '@/shared/api/axios'
-import { authControllerGetSessionInfo } from '@/shared/api/generated'
+import { authControllerGetSessionInfo } from '@/shared/api/orvalBack/generated'
+import { getEmotes, getTopGames, getUserById, getUserClips } from '@/shared/api/twitchApi/axios'
+import { ProtectedPage } from '@/shared/features/auth/protectedPage'
 import { useQuery } from '@tanstack/react-query'
 import { createBrowserRouter, Navigate, redirect, RouterProvider } from 'react-router-dom'
 
+import SignUp from '@/components/auth/sign-up'
+import SingIn from '@/components/auth/sing-in'
 import Layout from '@/app/routes/layout'
 
 import { PATH } from './path-constants'
@@ -39,17 +41,29 @@ export default function Routes() {
           },
         },
         {
-          path: PATH.AUTH,
-          element: <Auth />,
-        },
-        {
-          path: PATH.SECURE,
+          path: PATH.SIGNUP,
           element: (
-            <ProtectedPage>
-              <Test />
-            </ProtectedPage>
+            // <ProtectedPage>
+            <SignUp />
+            // </ProtectedPage>
           ),
         },
+        {
+          path: PATH.SIGNIN,
+          element: (
+            // <ProtectedPage>
+            <SingIn />
+            // </ProtectedPage>
+          ),
+        },
+        // {
+        //   path: PATH.SECURE,
+        //   element: (
+        //     <ProtectedPage>
+        //       <Test />
+        //     </ProtectedPage>
+        //   ),
+        // },
       ],
     },
   ])

@@ -1,4 +1,4 @@
-import { Emotes, TwitchUser } from '@/shared/api/types'
+import { Emotes, TwitchUser } from '@/shared/api/twitchApi/types'
 
 interface Props {
   user: TwitchUser

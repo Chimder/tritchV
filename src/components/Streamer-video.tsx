@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getVideosByUserId } from '@/shared/api/axios'
+import { getVideosByUserId } from '@/shared/api/twitchApi/axios'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'

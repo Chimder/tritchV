@@ -1,12 +1,11 @@
 module.exports = {
   main: {
-    // input: "./src/shared/api/swagger.yaml", // Укажите URL вашего Swagger-документа
-    input: 'https://sore-gray-pelican-wear.cyclic.app/api-yaml',
+    input: 'http://[::1]:4000/api-yaml',
     output: {
-      target: './src/shared/api/generated.ts',
+      target: './src/shared/api/orvalBack/generated.ts',
       override: {
         mutator: {
-          path: './src/shared/api/axios.instance.ts',
+          path: './src/shared/api/orvalBack/axios.instance.ts',
           name: 'customInstance',
         },
       },
