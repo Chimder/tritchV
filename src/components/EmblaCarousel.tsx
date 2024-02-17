@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { getTopStreamsByGame } from '@/shared/api/axios'
+import { getTopStreamsByGame } from '@/shared/api/twitchApi/axios'
 import { useQuery } from '@tanstack/react-query'
 import useEmblaCarousel from 'embla-carousel-react'
 import { AnimatePresence, motion } from 'framer-motion'

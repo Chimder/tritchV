@@ -1,5 +1,5 @@
 import { PropsWithChildren, useEffect, useState } from 'react'
-import { searchChannels } from '@/shared/api/axios'
+import { searchChannels } from '@/shared/api/twitchApi/axios'
 import { useDebouncedValue } from '@mantine/hooks'
 import { DotFilledIcon, ReloadIcon } from '@radix-ui/react-icons'
 import { useQuery } from '@tanstack/react-query'

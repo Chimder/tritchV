@@ -1,4 +1,4 @@
-import { TwitchVideo } from '@/shared/api/types'
+import { TwitchVideo } from '@/shared/api/twitchApi/types'
 import { formatCreatedAt } from '@/shared/lib/data-forma'
 import { EyeOpenIcon } from '@radix-ui/react-icons'
 

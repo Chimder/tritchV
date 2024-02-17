@@ -3,4 +3,7 @@ export const PATH = {
   STREAMER: '/streamer/:id',
   AUTH: '/auth',
   SECURE: '/test',
+  SIGNUP: '/sign-up',
+  SIGNIN: '/sign-in',
+  SIGNOUT: '/sign-out',
 }

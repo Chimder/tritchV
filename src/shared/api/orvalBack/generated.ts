@@ -7,6 +7,10 @@
  */
 import { customInstance } from './axios.instance';
 import type { BodyType } from './axios.instance';
+export type AuthControllerIsNameTakeParams = {
+name: string;
+};
+
 export interface GetSessionDto {
   email: string;
   exp: number;
@@ -14,13 +18,18 @@ export interface GetSessionDto {
   id: number;
 }
 
+export interface IsNameTaken {
+  name: string;
+}
+
 export interface SingInBodyDto {
-  email: string;
+  identifier: string;
   password: string;
 }
 
 export interface SingUpBodyDto {
   email: string;
+  name: string;
   password: string;
 }
 
@@ -31,6 +40,7 @@ export interface PatchAccountDto {
 export interface AccountDto {
   id: string;
   isBlocking: boolean;
+  name: string;
   ownerId: string;
 }
 
@@ -91,6 +101,16 @@ export const authControllerSingIn = (
       options);
     }
   
+export const authControllerIsNameTake = (
+    params: AuthControllerIsNameTakeParams,
+ options?: SecondParameter<typeof customInstance>,) => {
+      return customInstance<IsNameTaken>(
+      {url: `/auth/isNameTake`, method: 'POST',
+        params
+    },
+      options);
+    }
+  
 export const authControllerSingOut = (
     
  options?: SecondParameter<typeof customInstance>,) => {
@@ -114,5 +134,6 @@ export type AccountControllerGetAccountResult = NonNullable<Awaited<ReturnType<t
 export type AccountControllerPathcAccountResult = NonNullable<Awaited<ReturnType<typeof accountControllerPathcAccount>>>
 export type AuthControllerSingUpResult = NonNullable<Awaited<ReturnType<typeof authControllerSingUp>>>
 export type AuthControllerSingInResult = NonNullable<Awaited<ReturnType<typeof authControllerSingIn>>>
+export type AuthControllerIsNameTakeResult = NonNullable<Awaited<ReturnType<typeof authControllerIsNameTake>>>
 export type AuthControllerSingOutResult = NonNullable<Awaited<ReturnType<typeof authControllerSingOut>>>
 export type AuthControllerGetSessionInfoResult = NonNullable<Awaited<ReturnType<typeof authControllerGetSessionInfo>>>

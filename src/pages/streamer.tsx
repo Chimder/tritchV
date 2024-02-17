@@ -1,5 +1,5 @@
 import { lazy } from 'react'
-import { Emotes, TwitchUser } from '@/shared/api/types'
+import { Emotes, TwitchUser } from '@/shared/api/twitchApi/types'
 import { ScrollRestoration, useLoaderData } from 'react-router-dom'
 
 import StreamerInfo from '@/components/Streamer-info'
