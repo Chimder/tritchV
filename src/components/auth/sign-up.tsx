@@ -3,7 +3,6 @@ import { cn } from '@/shared/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ReloadIcon } from '@radix-ui/react-icons'
 import { useMutation } from '@tanstack/react-query'
-import { AxiosError } from 'axios'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
@@ -12,7 +11,6 @@ import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -42,13 +40,14 @@ export default function SignUp() {
       name: '',
     },
   })
-  console.log(form.formState.isSubmitting)
 
   const { mutate, isPending, isSuccess } = useMutation({
     mutationKey: ['signUp'],
     mutationFn: ({ email, password, name }: { email: string; password: string; name: string }) =>
       authControllerSingUp({ email: email, password: password, name: name }),
-    onSuccess: () => navigate(`${PATH.HOME}`),
+    onSuccess: () => {
+      navigate(`${PATH.HOME}`)
+    },
     onError: () => {
       form.setError('email', {
         type: 'manual',
@@ -81,7 +80,7 @@ export default function SignUp() {
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="name" {...field} />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -94,7 +93,7 @@ export default function SignUp() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="email" {...field} />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -107,21 +106,25 @@ export default function SignUp() {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input className="" type="password" placeholder="password" {...field} />
+                    <Input className="" type="password" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <Button
+              disabled={form.formState.isSubmitting}
               className={cn(
                 'w-full text-white',
                 `${isSuccess ? 'bg-green-600 hover:bg-green-600' : 'bg-purple-400'}`,
               )}
               type="submit"
             >
-              Submit
-              {form.formState.isSubmitting && <ReloadIcon className="ml-1 h-4 w-4 animate-spin" />}
+              {form.formState.isSubmitting ? (
+                <ReloadIcon className="ml-1 h-4 w-4 animate-spin" />
+              ) : (
+                'Submit'
+              )}
             </Button>
           </form>
         </Form>

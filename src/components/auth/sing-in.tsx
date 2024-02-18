@@ -1,8 +1,5 @@
-import {
-  authControllerIsNameTake,
-  authControllerSingIn,
-  authControllerSingUp,
-} from '@/shared/api/orvalBack/generated'
+import { authControllerSingIn } from '@/shared/api/orvalBack/generated'
+import { useAccountInfo } from '@/shared/features/auth/useSession'
 import { cn } from '@/shared/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ReloadIcon } from '@radix-ui/react-icons'
@@ -15,7 +12,6 @@ import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -31,6 +27,7 @@ const formSchema = z.object({
 
 export default function SignIn() {
   const navigate = useNavigate()
+  const { refetch } = useAccountInfo()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -43,7 +40,10 @@ export default function SignIn() {
     mutationKey: ['signUp'],
     mutationFn: ({ identifier, password }: { identifier: string; password: string }) =>
       authControllerSingIn({ identifier: identifier, password: password }),
-    onSuccess: () => navigate(`${PATH.HOME}`),
+    onSuccess: () => {
+      refetch()
+      navigate(`${PATH.HOME}`)
+    },
     onError: () => {
       form.setError('identifier', {
         type: 'manual',
@@ -66,11 +66,10 @@ export default function SignIn() {
               name="identifier"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name or email</FormLabel>
+                  <FormLabel>Username or email</FormLabel>
                   <FormControl>
-                    <Input placeholder="identifier" {...field} />
+                    <Input {...field} />
                   </FormControl>
-                  {/* <FormDescription></FormDescription> */}
                   <FormMessage />
                 </FormItem>
               )}
@@ -80,24 +79,27 @@ export default function SignIn() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>password</FormLabel>
+                  <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="password" {...field} />
+                    <Input type="password" {...field} />
                   </FormControl>
-                  {/* <FormDescription>display password</FormDescription> */}
                   <FormMessage />
                 </FormItem>
               )}
             />
             <Button
+              disabled={form.formState.isSubmitting}
               className={cn(
                 'w-full text-white',
                 `${isSuccess ? 'bg-green-600 hover:bg-green-600' : 'bg-purple-400'}`,
               )}
               type="submit"
             >
-              Submit
-              {form.formState.isSubmitting && <ReloadIcon className="ml-1 h-4 w-4 animate-spin" />}
+              {form.formState.isSubmitting ? (
+                <ReloadIcon className="ml-1 h-4 w-4 animate-spin" />
+              ) : (
+                'Submit'
+              )}
             </Button>
           </form>
         </Form>

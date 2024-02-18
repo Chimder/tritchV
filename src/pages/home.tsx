@@ -35,7 +35,12 @@ export default function Home() {
         </div>
         <EmblaCarousel slides={games} />
       </section>
-      <section></section>
+      <section>
+        <div>
+          <input type="file" placeholder="Upload" />
+          <button>Upload</button>
+        </div>
+      </section>
     </main>
   )
 }
