@@ -1,21 +1,18 @@
 import {
   accountControllerGetAccount,
   authControllerGetSessionInfo,
+  authControllerSingOut,
 } from '@/shared/api/orvalBack/generated'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
+const queryKeySession = ['session']
 export function useSessionQuery() {
   return useQuery({
-    queryKey: ['session'],
+    queryKey: queryKeySession,
     queryFn: authControllerGetSessionInfo,
     retry: 0,
     staleTime: 24 * 60 * 60 * 1000,
   })
-}
-
-export function useResetSession() {
-  const queryClient = useQueryClient()
-  return () => queryClient.removeQueries()
 }
 
 export function useAccountInfo() {
@@ -24,5 +21,16 @@ export function useAccountInfo() {
     queryFn: accountControllerGetAccount,
     retry: 0,
     staleTime: 24 * 60 * 60 * 1000,
+  })
+}
+
+export function useAccountSingOut() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationKey: ['singOut'],
+    mutationFn: () => authControllerSingOut(),
+    onSuccess: () => {
+      queryClient.resetQueries({ queryKey: ['account'], exact: true })
+    },
   })
 }

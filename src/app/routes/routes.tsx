@@ -4,6 +4,7 @@ import Test from '@/pages/test'
 import { authControllerGetSessionInfo } from '@/shared/api/orvalBack/generated'
 import { getEmotes, getTopGames, getUserById, getUserClips } from '@/shared/api/twitchApi/axios'
 import { ProtectedPage } from '@/shared/features/auth/protectedPage'
+import { ProtectedSign } from '@/shared/features/auth/protectedSign'
 import { useQuery } from '@tanstack/react-query'
 import { createBrowserRouter, Navigate, redirect, RouterProvider } from 'react-router-dom'
 
@@ -43,17 +44,17 @@ export default function Routes() {
         {
           path: PATH.SIGNUP,
           element: (
-            // <ProtectedPage>
-            <SignUp />
-            // </ProtectedPage>
+            // <ProtectedSign>
+              <SignUp />
+            // </ProtectedSign>
           ),
         },
         {
           path: PATH.SIGNIN,
           element: (
-            // <ProtectedPage>
-            <SingIn />
-            // </ProtectedPage>
+            // <ProtectedSign>
+              <SingIn />
+            // </ProtectedSign>
           ),
         },
         // {
