@@ -1,6 +1,4 @@
 import { lazy } from 'react'
-import Auth from '@/pages/auth'
-import Test from '@/pages/test'
 import { authControllerGetSessionInfo } from '@/shared/api/orvalBack/generated'
 import { getEmotes, getTopGames, getUserById, getUserClips } from '@/shared/api/twitchApi/axios'
 import { ProtectedPage } from '@/shared/features/auth/protectedPage'
