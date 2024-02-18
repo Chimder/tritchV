@@ -2,7 +2,7 @@ import { authControllerIsNameTake, authControllerSingUp } from '@/shared/api/orv
 import { cn } from '@/shared/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ReloadIcon } from '@radix-ui/react-icons'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
@@ -32,6 +32,7 @@ const formSchema = z.object({
 
 export default function SignUp() {
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -47,6 +48,7 @@ export default function SignUp() {
       authControllerSingUp({ email: email, password: password, name: name }),
     onSuccess: () => {
       navigate(`${PATH.HOME}`)
+      queryClient.refetchQueries({ queryKey: ['account'] })
     },
     onError: () => {
       form.setError('email', {
