@@ -12,6 +12,7 @@ export function useSessionQuery() {
     queryFn: authControllerGetSessionInfo,
     retry: 0,
     staleTime: 24 * 60 * 60 * 1000,
+    refetchOnWindowFocus: false,
   })
 }
 
@@ -21,6 +22,7 @@ export function useAccountInfo() {
     queryFn: accountControllerGetAccount,
     retry: 0,
     staleTime: 24 * 60 * 60 * 1000,
+    refetchOnWindowFocus: false,
   })
 }
 
