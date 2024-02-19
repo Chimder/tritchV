@@ -1,11 +1,14 @@
-import { authControllerSingIn } from '@/shared/api/orvalBack/generated'
-import { useAccountInfo } from '@/shared/features/auth/useSession'
+import {
+  authControllerIsNameTake,
+  authControllerPasswordReset,
+  authControllerSingUp,
+} from '@/shared/api/orvalBack/generated'
 import { cn } from '@/shared/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ReloadIcon } from '@radix-ui/react-icons'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { z } from 'zod'
 
 import { Button } from '@/components/ui/button'
@@ -21,52 +24,59 @@ import { Input } from '@/components/ui/input'
 import { PATH } from '@/app/routes/path-constants'
 
 const formSchema = z.object({
-  password: z.string().min(6, { message: 'Password must be at least 6 characters.' }),
-  identifier: z.string().min(4),
+  newPassword: z.string().min(6, { message: 'Password must be at least 6 characters.' }),
+  confirmPassword: z.string().min(6, { message: 'Password must be at least 6 characters.' }),
 })
 
-export default function SignIn() {
+export default function ResetPassword() {
+  const param = useParams()
   const navigate = useNavigate()
-  const { refetch } = useAccountInfo()
+  const queryClient = useQueryClient()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      identifier: '',
-      password: '',
+      newPassword: '',
     },
   })
 
   const { mutate, isSuccess } = useMutation({
     mutationKey: ['signUp'],
-    mutationFn: ({ identifier, password }: { identifier: string; password: string }) =>
-      authControllerSingIn({ identifier: identifier, password: password }),
+    mutationFn: ({ newPassword }: { newPassword: string }) =>
+      authControllerPasswordReset({ newPassword: newPassword, token: param?.token as string }),
     onSuccess: () => {
-      refetch()
       navigate(`${PATH.HOME}`)
+      queryClient.refetchQueries({ queryKey: ['account'] })
     },
     onError: () => {
-      form.setError('identifier', {
+      form.setError('newPassword', {
         type: 'manual',
-        message: 'Invalid username or password.',
+        message: 'Try another email ',
       })
       return
     },
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    mutate({ identifier: values.identifier, password: values.password })
+    if (values.newPassword !== values.confirmPassword) {
+      form.setError('confirmPassword', {
+        type: 'manual',
+        message: 'The passwords dont match',
+      })
+      return
+    }
+    mutate({ newPassword: values.newPassword })
   }
   return (
-    <div className="flex  h-full w-full items-center justify-center pt-64">
-      <div className=" px-auto flex">
+    <div className="flex h-full w-full items-center justify-center pt-64">
+      <div className=" px-auto flex w-full justify-center">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="min-w-72 space-y-7">
             <FormField
               control={form.control}
-              name="identifier"
+              name="newPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Username or email</FormLabel>
+                  <FormLabel>New Password</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -76,12 +86,12 @@ export default function SignIn() {
             />
             <FormField
               control={form.control}
-              name="password"
+              name="confirmPassword"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel>Confirm Password</FormLabel>
                   <FormControl>
-                    <Input type="password" {...field} />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

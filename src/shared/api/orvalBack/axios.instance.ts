@@ -3,7 +3,7 @@ import Axios, { AxiosError, AxiosRequestConfig } from 'axios'
 const url = import.meta.env.VITE_BACK_API
 
 export const AXIOS_INSTANCE = Axios.create({
-  // baseURL: "http://[::1]:4000",
+  // baseURL: 'http://[::1]:4000',
   baseURL: url,
   withCredentials: true,
   headers: {

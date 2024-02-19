@@ -1,5 +1,5 @@
 import { PropsWithChildren } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 
 import { PATH } from '@/app/routes/path-constants'
 
@@ -10,14 +10,15 @@ interface ProtectedPageProps {
 }
 
 export function ProtectedSign({ children }: PropsWithChildren<ProtectedPageProps>) {
-  const navigate = useNavigate()
-
-  const { data: session } = useAccountInfo()
+  const { data: session, status, isLoading } = useSessionQuery()
 
   console.log('AUTHSES', session)
-  if (session) {
-    navigate(PATH.HOME)
-    return null
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+
+  if (status === 'success' && session.email) {
+    return <Navigate to={PATH.HOME} />
   }
 
   return <>{children}</>
