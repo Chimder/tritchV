@@ -27,6 +27,7 @@ const formSchema = z.object({
     })
     .email({ message: 'not valid email' }),
   password: z.string().min(6, { message: 'Password must be at least 6 characters.' }),
+  confirmPassword: z.string().min(6, { message: 'Password must be at least 6 characters.' }),
   name: z.string().min(4),
 })
 
@@ -65,6 +66,13 @@ export default function SignUp() {
       form.setError('name', {
         type: 'manual',
         message: 'This name is already taken.',
+      })
+      return
+    }
+    if (values.password !== values.confirmPassword) {
+      form.setError('confirmPassword', {
+        type: 'manual',
+        message: 'The passwords dont match',
       })
       return
     }
@@ -114,19 +122,28 @@ export default function SignUp() {
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="confirmPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Confirm Password</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <Button
-              disabled={form.formState.isSubmitting}
+              disabled={isPending}
               className={cn(
                 'w-full text-white',
                 `${isSuccess ? 'bg-green-600 hover:bg-green-600' : 'bg-purple-400'}`,
               )}
               type="submit"
             >
-              {form.formState.isSubmitting ? (
-                <ReloadIcon className="ml-1 h-4 w-4 animate-spin" />
-              ) : (
-                'Submit'
-              )}
+              {isPending ? <ReloadIcon className="ml-1 h-4 w-4 animate-spin" /> : 'Submit'}
             </Button>
           </form>
         </Form>

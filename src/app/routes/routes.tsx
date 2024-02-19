@@ -1,13 +1,12 @@
 import { lazy } from 'react'
-import { authControllerGetSessionInfo } from '@/shared/api/orvalBack/generated'
 import { getEmotes, getTopGames, getUserById, getUserClips } from '@/shared/api/twitchApi/axios'
-import { ProtectedPage } from '@/shared/features/auth/protectedPage'
 import { ProtectedSign } from '@/shared/features/auth/protectedSign'
-import { useQuery } from '@tanstack/react-query'
 import { createBrowserRouter, Navigate, redirect, RouterProvider } from 'react-router-dom'
 
+import ReqResPassword from '@/components/auth/reqResPass'
+import ResetPassword from '@/components/auth/resetPassword'
+import SignIn from '@/components/auth/sign-in'
 import SignUp from '@/components/auth/sign-up'
-import SingIn from '@/components/auth/sing-in'
 import Layout from '@/app/routes/layout'
 
 import { PATH } from './path-constants'
@@ -42,27 +41,35 @@ export default function Routes() {
         {
           path: PATH.SIGNUP,
           element: (
-            // <ProtectedSign>
+            <ProtectedSign>
               <SignUp />
-            // </ProtectedSign>
+            </ProtectedSign>
           ),
         },
         {
           path: PATH.SIGNIN,
           element: (
-            // <ProtectedSign>
-              <SingIn />
-            // </ProtectedSign>
+            <ProtectedSign>
+              <SignIn />
+            </ProtectedSign>
           ),
         },
-        // {
-        //   path: PATH.SECURE,
-        //   element: (
-        //     <ProtectedPage>
-        //       <Test />
-        //     </ProtectedPage>
-        //   ),
-        // },
+        {
+          path: PATH.REQRESPASS,
+          element: (
+            <ProtectedSign>
+              <ReqResPassword />
+            </ProtectedSign>
+          ),
+        },
+        {
+          path: PATH.RESETPASSWORD,
+          element: (
+            <ProtectedSign>
+              <ResetPassword />
+            </ProtectedSign>
+          ),
+        },
       ],
     },
   ])
