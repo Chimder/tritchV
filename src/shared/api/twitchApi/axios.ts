@@ -160,7 +160,7 @@ export async function getTopGames(): Promise<{ data: TopGame[] }> {
   try {
     const { data } = await axios.get('https://api.twitch.tv/helix/games/top', {
       params: {
-        first: 50,
+        first: 100,
       },
       headers: {
         'Client-ID': import.meta.env.VITE_PUBLIC_CLIENT_ID,

@@ -1,14 +1,11 @@
-import { accountControllerGetAccount } from '@/shared/api/orvalBack/generated'
-import { useAccountInfo, useSessionQuery } from '@/shared/features/auth/useSession'
+import { useAccountInfo } from '@/shared/features/auth/useSession'
 import { ReloadIcon } from '@radix-ui/react-icons'
-import { useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 
 import { PATH } from '@/app/routes/path-constants'
 
 import { DropdownLogo } from './drop-down-logo'
 import { Badge } from './ui/badge'
-import { Button } from './ui/button'
 
 // type Props = {};
 
