@@ -35,6 +35,10 @@ const EmblaCarousel: React.FC<PropType> = ({ slides }) => {
   } = useQuery({
     queryKey: [`getPopStreams${selectedIndex}${idGame}${type}`],
     queryFn: async () => getTopStreamsByGame(idGame, type),
+    retry: 0,
+    enabled: !!setSelectedIndex,
+    staleTime: 50000,
+    refetchOnMount: false,
     refetchOnWindowFocus: false,
   })
 

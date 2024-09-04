@@ -12,7 +12,7 @@ import { Input } from './ui/input'
 export function DialogInput({ children }: PropsWithChildren) {
   const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState<string>('')
-  const [debouncedSearchQuery] = useDebouncedValue(searchQuery, 450)
+  const [debouncedSearchQuery] = useDebouncedValue(searchQuery, 500)
 
   const {
     data: searchResults,
@@ -61,7 +61,7 @@ export function DialogInput({ children }: PropsWithChildren) {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                className="relative flex h-16 cursor-pointer list-none items-start rounded-lg pl-5 pt-3 text-secondary no-underline hover:bg-black/50 hover:bg-card hover:opacity-80"
+                className="relative flex h-16 cursor-pointer list-none items-start rounded-lg pl-5 pt-3 text-secondary no-underline  hover:bg-card hover:opacity-80"
                 key={channel.id}
                 onClick={() => navigate(`/streamer/${channel.id}`)}
               >

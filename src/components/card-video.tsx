@@ -1,3 +1,4 @@
+import { forwardRef } from 'react'
 import { TwitchVideo } from '@/shared/api/twitchApi/types'
 import { formatCreatedAt } from '@/shared/lib/data-forma'
 import { EyeOpenIcon } from '@radix-ui/react-icons'
@@ -10,16 +11,16 @@ type Props = {
   type: 'offline' | 'stream' | 'clips'
 }
 
-const CardVideo = ({ video, type }: Props) => {
+const CardVideo = forwardRef<HTMLDivElement, Props>(({ video, type }, ref) => {
   const online = type === 'stream'
   return (
     <DialogIframe
-      name={online ? video?.user_name : video?.id}
+      name={online ? video?.user_login : video?.id}
       key={video?.id}
       type={type}
       url={video?.embed_url}
     >
-      <div className="relative mx-1 mb-1 h-full w-full cursor-pointer rounded-sm sm:mx-0">
+      <div ref={ref} className="relative mx-1 mb-1 h-full w-full cursor-pointer rounded-sm sm:mx-0">
         <span className="relative box-border block w-full opacity-100">
           <img
             className="relative h-full w-full rounded-xl align-middle opacity-95 brightness-75 duration-500 ease-in-out"
@@ -82,6 +83,6 @@ const CardVideo = ({ video, type }: Props) => {
       </div>
     </DialogIframe>
   )
-}
+})
 
 export default CardVideo

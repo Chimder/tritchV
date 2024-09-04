@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { getVideosByUserId } from '@/shared/api/twitchApi/axios'
 import { useInfiniteQuery } from '@tanstack/react-query'
-import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { useParams } from 'react-router-dom'
 
@@ -19,14 +18,19 @@ const StreamerVideos = () => {
     return result
   }
 
-  const { data, fetchNextPage, refetch, hasNextPage, isRefetching, isFetchingNextPage } =
+  const { data, fetchNextPage, refetch, hasNextPage, isRefetching } =
     useInfiniteQuery({
       queryKey: ['getVideosByUserId', id],
       queryFn: fetchVideos,
       getNextPageParam: lastPage => lastPage?.nextCursor || null,
       initialPageParam: undefined,
+      enabled: !!id,
+      retry: 0,
+      staleTime: 50000,
+      refetchOnMount: false,
       refetchOnWindowFocus: false,
     })
+
   const ToggleType = async (type: 'offline' | 'stream' | 'clips') => {
     await setType(type)
     await refetch()
@@ -65,33 +69,19 @@ const StreamerVideos = () => {
         </div>
         <div className="gridCard">
           {isRefetching
-            ? Array.from({ length: 80 }, (_, index) => (
-                <React.Fragment key={`skeleton-${index}`}>
-                  <motion.div
-                    initial={{ opacity: 0.7, scale: 1 }}
-                    animate="visible"
-                    exit={{ opacity: 0.7, scale: 1 }}
-                    transition={{ duration: 0.3 }}
-                    className="relative mr-4 w-full overflow-hidden rounded-2xl"
-                    style={{ paddingBottom: '52%' }}
-                  >
-                    <div className="absolute inset-0 px-3">
-                      <Skeleton className="h-full w-full" />
-                    </div>
-                  </motion.div>
-                </React.Fragment>
+            ? Array.from({ length: 6 }, (_, index) => (
+                <div
+                  key={`skeleton-${index}`}
+                  className="relative mr-4 w-full overflow-hidden rounded-2xl"
+                  style={{ paddingBottom: '56%' }}
+                >
+                  <div className="absolute inset-0 px-3">
+                    <Skeleton className="h-full w-full" />
+                  </div>
+                </div>
               ))
             : videos?.map(video => (
-                <motion.div
-                  ref={ref}
-                  key={video.id}
-                  initial={{ opacity: 0.7, scale: 1 }}
-                  exit={{ opacity: 0.6, scale: 1 }}
-                  transition={{ duration: 1 }}
-                  animate="visible"
-                >
-                  <CardVideo key={video.id} type={type} video={video}></CardVideo>
-                </motion.div>
+                <CardVideo ref={ref} key={video.id} type={type} video={video}></CardVideo>
               ))}
         </div>
       </div>
