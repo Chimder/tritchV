@@ -1,13 +1,12 @@
-import { useAccountInfo } from '@/shared/features/auth/useSession'
+import { useAccountInfo } from '@/features/auth/useSession'
 import { ReloadIcon } from '@radix-ui/react-icons'
 import { Link } from 'react-router-dom'
 
 import { PATH } from '@/app/routes/path-constants'
 
-import { DropdownLogo } from './drop-down-logo'
+import { DropDownLogo } from './drop-down-logo'
 import { Badge } from './ui/badge'
 
-// type Props = {};
 
 const Header = () => {
   const { data: account, isFetching } = useAccountInfo()
@@ -22,14 +21,14 @@ const Header = () => {
           <ReloadIcon className="ml-1 h-6 w-6 animate-spin text-green-600 " />
         </div>
       ) : account ? (
-        <DropdownLogo>
+        <DropDownLogo>
           <div className="flex items-center justify-center pr-24">
             <div className="pr-2 text-green-600">
               {account?.name} {account?.ownerId}
             </div>
             <img className="w-10 rounded-full" src="/user.png" alt="userLogo" />
           </div>
-        </DropdownLogo>
+        </DropDownLogo>
       ) : (
         <div className="flex flex-col items-center justify-center pr-20">
           <Link preventScrollReset={false} className="flex items-center pl-24" to={PATH.SIGNIN}>

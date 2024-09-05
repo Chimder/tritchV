@@ -2,7 +2,7 @@ import {
   accountControllerGetAccount,
   authControllerGetSessionInfo,
   authControllerSingOut,
-} from '@/shared/api/orvalBack/generated'
+} from '@/shared/api/swagger/generated'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 const queryKeySession = ['session']

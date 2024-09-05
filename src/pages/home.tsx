@@ -1,12 +1,15 @@
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
-import { ScrollRestoration, useLoaderData } from 'react-router-dom'
+import { ScrollRestoration } from 'react-router-dom'
 
+import { useGamesData } from '@/hooks/query/games'
 import { Button } from '@/components/ui/button'
-import { DialogInput } from '@/components/dialog-search'
-import EmblaCarousel from '@/components/EmblaCarousel'
+import EmblaCarousel from '@/components/carousel'
+import { DialogInput } from '@/components/dialog-input'
 
 export default function Home() {
-  const games = useLoaderData()
+  const { data: games } = useGamesData()
+
+  if (!games) return <>no data</>
 
   return (
     <main className="h-[2000px] overflow-hidden">

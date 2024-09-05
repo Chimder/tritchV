@@ -1,8 +1,9 @@
+import { startTransition } from 'react'
 import {
   authControllerIsNameTake,
   authControllerRequestPasswordReset,
   authControllerSingUp,
-} from '@/shared/api/orvalBack/generated'
+} from '@/shared/api/swagger/generated'
 import { cn } from '@/shared/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ReloadIcon } from '@radix-ui/react-icons'
@@ -22,7 +23,6 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { PATH } from '@/app/routes/path-constants'
-import { startTransition } from 'react'
 
 const formSchema = z.object({
   email: z
@@ -47,12 +47,12 @@ export default function ReqResPassword() {
     mutationFn: ({ email }: { email: string }) =>
       authControllerRequestPasswordReset({ email: email }),
     onSuccess: () => {
-      form.reset({ email: 'Check your e-mail' });
+      form.reset({ email: 'Check your e-mail' })
       startTransition(() => {
         setTimeout(() => {
-          navigate(PATH.SIGNIN);
-        }, 3000);
-      });
+          navigate(PATH.SIGNIN)
+        }, 3000)
+      })
     },
     onError: () => {
       form.setError('email', {

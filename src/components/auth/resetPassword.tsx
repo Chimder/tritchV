@@ -2,7 +2,7 @@ import {
   authControllerIsNameTake,
   authControllerPasswordReset,
   authControllerSingUp,
-} from '@/shared/api/orvalBack/generated'
+} from '@/shared/api/swagger/generated'
 import { cn } from '@/shared/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ReloadIcon } from '@radix-ui/react-icons'

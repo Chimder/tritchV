@@ -1,16 +1,20 @@
-import { Emotes, TwitchUser } from '@/shared/api/twitchApi/types'
+import { useParams } from 'react-router-dom'
 
-interface Props {
-  user: TwitchUser
-  emotes: Emotes[]
-}
+import { useUserById, useUserEmotes } from '@/hooks/query/user'
 
-export default function StreamerInfo({ user, emotes }: Props) {
+
+export default function StreamerInfo() {
+  const { id } = useParams()
+
+  const { data: user } = useUserById(id)
+  const { data: emotes } = useUserEmotes(id)
+
   const getRandomPosition = () => ({
     top: `${Math.random() * 32}vh`,
     left: `${Math.random() * 98}vw`,
     transform: `rotate(${Math.random() > 0.5 ? '' : '-'}${Math.random() * 10}deg)`,
   })
+
   return (
     <>
       <div className="z-1 absolute mt-16 flex h-[60vh] w-full overflow-x-hidden">
@@ -38,11 +42,11 @@ export default function StreamerInfo({ user, emotes }: Props) {
         <div className="mt-5 flex items-center justify-center rounded-2xl border-[3px] border-border md:flex-col">
           <iframe
             className="relative h-[68vh] w-[70vw] rounded-2xl pr-2 lg:h-[58vh] lg:w-[75vw] md:h-[50vh] md:w-[96vw] md:pb-1 md:pr-0 sm:h-[30vh]"
-            src={`https://player.twitch.tv/?channel=${user?.display_name}&autoplay=1&muted=1&parent=localhost&parent=tritch-vite.vercel.app`}
+            src={`https://player.twitch.tv/?channel=${user?.login}&autoplay=1&muted=1&parent=localhost&parent=tritch-vite.vercel.app`}
           ></iframe>
           <iframe
             className=" h-[68vh] w-[18vw] rounded-2xl lg:h-[58vh] lg:w-[21vw] md:h-[42vh] md:w-[96vw] "
-            src={`https://www.twitch.tv/embed/${user?.display_name}/chat?parent=localhost&parent=tritch-vite.vercel.app&darkpopout`}
+            src={`https://www.twitch.tv/embed/${user?.login}/chat?parent=localhost&parent=tritch-vite.vercel.app&darkpopout`}
           ></iframe>
         </div>
       </section>

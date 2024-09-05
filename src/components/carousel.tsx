@@ -1,19 +1,20 @@
 import React, { useState } from 'react'
-import { getTopStreamsByGame } from '@/shared/api/twitchApi/axios'
-import { useQuery } from '@tanstack/react-query'
+import { TopGame } from '@/shared/api/twitchApi/types'
 import useEmblaCarousel from 'embla-carousel-react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useParams } from 'react-router-dom'
 
+import { usePopGamesStreams } from '@/hooks/query/games'
+
 import CardVideo from './card-video'
-import { Thumb } from './EmblaCarouselThumbsButton'
+import { Thumb } from './carousel-Thumbs'
 import { Skeleton } from './ui/skeleton'
 
 type PropType = {
-  slides: any
+  slides: TopGame[]
 }
 
-const EmblaCarousel: React.FC<PropType> = ({ slides }) => {
+const EmblaCarousel = ({ slides }: PropType) => {
   const params = useParams()
 
   const id = params?.id as string
@@ -32,15 +33,7 @@ const EmblaCarousel: React.FC<PropType> = ({ slides }) => {
     refetch,
     isLoading,
     isRefetching,
-  } = useQuery({
-    queryKey: [`getPopStreams${selectedIndex}${idGame}${type}`],
-    queryFn: async () => getTopStreamsByGame(idGame, type),
-    retry: 0,
-    enabled: !!setSelectedIndex,
-    staleTime: 50000,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-  })
+  } = usePopGamesStreams(selectedIndex, idGame, type)
 
   const onThumbClick = (index: number, type: 'clips' | 'stream') => {
     try {
@@ -52,7 +45,6 @@ const EmblaCarousel: React.FC<PropType> = ({ slides }) => {
       console.error(error)
     }
   }
-  console.log('GAME', game)
 
   return (
     <>
@@ -94,7 +86,8 @@ const EmblaCarousel: React.FC<PropType> = ({ slides }) => {
                     </motion.div>
                   </React.Fragment>
                 ))
-              : game?.map((game: any) => (
+              : game &&
+                game.map((game: any) => (
                   <CardVideo video={game} type={type} key={game?.id}></CardVideo>
                 ))}
           </AnimatePresence>

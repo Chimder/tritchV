@@ -98,7 +98,6 @@ export async function getCurrentStreamByUserId(
   userId: string,
   accessToken?: string,
 ): Promise<TwitchStream | null> {
-  // const accessToken = await getAccessToken();
 
   try {
     const response = await axios.get<TwitchStreamResponse>('https://api.twitch.tv/helix/streams', {
@@ -154,7 +153,7 @@ export async function getVideosByUserId(
   }
 }
 
-export async function getTopGames(): Promise<{ data: TopGame[] }> {
+export async function getTopGames(): Promise<TopGame[]> {
   const accessToken = await getAccessToken()
 
   try {

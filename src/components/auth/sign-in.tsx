@@ -1,6 +1,6 @@
 import { useTransition } from 'react'
-import { authControllerSingIn } from '@/shared/api/orvalBack/generated'
-import { useAccountInfo } from '@/shared/features/auth/useSession'
+import { useAccountInfo } from '@/features/auth/useSession'
+import { authControllerSingIn } from '@/shared/api/swagger/generated'
 import { cn } from '@/shared/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ReloadIcon } from '@radix-ui/react-icons'
@@ -28,7 +28,7 @@ const formSchema = z.object({
 
 export default function SignIn() {
   const navigate = useNavigate()
-  const { refetch  } = useAccountInfo()
+  const { refetch } = useAccountInfo()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {

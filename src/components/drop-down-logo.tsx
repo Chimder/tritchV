@@ -1,11 +1,9 @@
-import { PropsWithChildren, ReactNode } from 'react'
-import { useAccountSingOut } from '@/shared/features/auth/useSession'
+import { ReactNode } from 'react'
+import { useAccountSingOut } from '@/features/auth/useSession'
 
-import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -15,13 +13,12 @@ import {
 interface Props {
   children: ReactNode
 }
-export function DropdownLogo({ children }: Props) {
+export function DropDownLogo({ children }: Props) {
   const { mutate } = useAccountSingOut()
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         {children}
-        {/* <Button variant="outline">Open</Button> */}
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>

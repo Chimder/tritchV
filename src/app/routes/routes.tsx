@@ -1,6 +1,6 @@
 import { lazy } from 'react'
+import { ProtectedSign } from '@/features/auth/protectedSign'
 import { getEmotes, getTopGames, getUserById, getUserClips } from '@/shared/api/twitchApi/axios'
-import { ProtectedSign } from '@/shared/features/auth/protectedSign'
 import { createBrowserRouter, Navigate, redirect, RouterProvider } from 'react-router-dom'
 
 import ReqResPassword from '@/components/auth/reqResPass'

@@ -18,18 +18,17 @@ const StreamerVideos = () => {
     return result
   }
 
-  const { data, fetchNextPage, refetch, hasNextPage, isRefetching } =
-    useInfiniteQuery({
-      queryKey: ['getVideosByUserId', id],
-      queryFn: fetchVideos,
-      getNextPageParam: lastPage => lastPage?.nextCursor || null,
-      initialPageParam: undefined,
-      enabled: !!id,
-      retry: 0,
-      staleTime: 50000,
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-    })
+  const { data, fetchNextPage, refetch, hasNextPage, isRefetching } = useInfiniteQuery({
+    queryKey: ['getVideosByUserId', id],
+    queryFn: fetchVideos,
+    getNextPageParam: lastPage => lastPage?.nextCursor || null,
+    initialPageParam: undefined,
+    enabled: !!id,
+    retry: 0,
+    staleTime: 50000,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+  })
 
   const ToggleType = async (type: 'offline' | 'stream' | 'clips') => {
     await setType(type)
@@ -69,7 +68,7 @@ const StreamerVideos = () => {
         </div>
         <div className="gridCard">
           {isRefetching
-            ? Array.from({ length: 6 }, (_, index) => (
+            ? Array.from({ length: 12 }, (_, index) => (
                 <div
                   key={`skeleton-${index}`}
                   className="relative mr-4 w-full overflow-hidden rounded-2xl"

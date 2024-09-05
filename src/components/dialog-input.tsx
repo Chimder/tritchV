@@ -1,10 +1,10 @@
 import { PropsWithChildren, useEffect, useState } from 'react'
-import { searchChannels } from '@/shared/api/twitchApi/axios'
 import { useDebouncedValue } from '@mantine/hooks'
 import { DotFilledIcon, ReloadIcon } from '@radix-ui/react-icons'
-import { useQuery } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
+
+import { useSearchInput } from '@/hooks/query/user'
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog'
 import { Input } from './ui/input'
@@ -14,16 +14,7 @@ export function DialogInput({ children }: PropsWithChildren) {
   const [searchQuery, setSearchQuery] = useState<string>('')
   const [debouncedSearchQuery] = useDebouncedValue(searchQuery, 500)
 
-  const {
-    data: searchResults,
-    refetch,
-    isFetching,
-  } = useQuery({
-    queryKey: ['searchResults', debouncedSearchQuery],
-    queryFn: async () => searchChannels(debouncedSearchQuery),
-    enabled: !!debouncedSearchQuery,
-    refetchOnWindowFocus: false,
-  })
+  const { data: searchResults, refetch, isFetching } = useSearchInput(debouncedSearchQuery)
 
   useEffect(() => {
     if (debouncedSearchQuery) {
