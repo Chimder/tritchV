@@ -14,4 +14,7 @@ export default defineConfig({
       index: './src/app/main.tsx',
     },
   },
+  performance: {
+    removeMomentLocale: true,
+  },
 })

@@ -4,7 +4,7 @@ import { ScrollRestoration } from 'react-router-dom'
 const StreamerInfo = lazy(() => import('@/components/streamer-info'))
 const StreamerVideos = lazy(() => import('@/components/streamer-video'))
 
-const Streamer = () => {
+export const Streamer = () => {
   return (
     <article className="overflow-hidden">
       <ScrollRestoration />
@@ -13,5 +13,3 @@ const Streamer = () => {
     </article>
   )
 }
-
-export default Streamer

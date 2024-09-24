@@ -1,12 +1,14 @@
+import { lazy } from 'react'
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
 import { ScrollRestoration } from 'react-router-dom'
 
 import { useGamesData } from '@/hooks/query/games'
 import { Button } from '@/components/ui/button'
-import EmblaCarousel from '@/components/carousel'
 import { DialogInput } from '@/components/dialog-input'
 
-export default function Home() {
+const EmblaCarousel = lazy(() => import('@/components/carousel'))
+
+export function Home() {
   const { data: games } = useGamesData()
 
   if (!games) return <>no data</>
