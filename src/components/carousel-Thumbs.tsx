@@ -32,7 +32,6 @@ export const Thumb: React.FC<PropType> = ({ selected, imgSrc, index, number, onC
         </div>
         <img className="ImgCarusel" src={imgSrc} alt="Your alt text" />
       </button>
-
       <div className="ImgCarusel absolute top-0 z-10 flex w-full flex-col rounded-2xl opacity-0 group-hover:opacity-100">
         <motion.div
           whileHover={{ scale: 1.05 }}
