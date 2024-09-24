@@ -23,10 +23,6 @@ export default function Routes() {
             let { Home } = await import('../../pages/home')
             return { Component: Home }
           },
-          // loader: async () => {
-          //   const load = await getTopGames()
-          //   return load
-          // },
         },
         {
           path: PATH.STREAMER,
@@ -34,13 +30,6 @@ export default function Routes() {
             let { Streamer } = await import('../../pages/streamer')
             return { Component: Streamer }
           },
-          // loader: async ({ params }) => {
-          //   const [user, emotes] = await Promise.all([
-          //     getUserById(params?.id),
-          //     getEmotes(params?.id),
-          //   ])
-          //   return { user, emotes }
-          // },
         },
         {
           path: PATH.SIGNUP,
