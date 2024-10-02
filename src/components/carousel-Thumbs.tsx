@@ -30,7 +30,14 @@ export const Thumb: React.FC<PropType> = ({ selected, imgSrc, index, number, onC
             <span className="text-lg text-white">{number + 1}</span>
           </Badge>
         </div>
-        <img className="ImgCarusel" src={imgSrc} alt="Your alt text" />
+        <img
+          className="ImgCarusel"
+          loading="lazy"
+          width={320}
+          height={180}
+          src={imgSrc}
+          alt="Your alt text"
+        />
       </button>
       <div className="ImgCarusel absolute top-0 z-10 flex w-full flex-col rounded-2xl opacity-0 group-hover:opacity-100">
         <motion.div

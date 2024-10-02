@@ -57,7 +57,14 @@ export function DialogInput({ children }: PropsWithChildren) {
                 onClick={() => navigate(`/streamer/${channel.id}`)}
               >
                 <div className="flex items-center justify-center">
-                  <img className="w-10 rounded-full" src={channel.thumbnail_url} alt="" />
+                  <img
+                    className="w-10 rounded-full"
+                    width={320}
+                    height={180}
+                    src={channel.thumbnail_url}
+                    loading="lazy"
+                    alt=""
+                  />
 
                   <span className="top[-20px] relative pl-5 text-white">
                     {channel.display_name}

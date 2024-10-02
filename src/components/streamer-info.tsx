@@ -2,7 +2,6 @@ import { useParams } from 'react-router-dom'
 
 import { useUserById, useUserEmotes } from '@/hooks/query/user'
 
-
 export default function StreamerInfo() {
   const { id } = useParams()
 

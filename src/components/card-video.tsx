@@ -29,6 +29,9 @@ const CardVideo = forwardRef<HTMLDivElement, Props>(({ video, type }, ref) => {
                 ? video?.thumbnail_url.replace('{width}', '320').replace('{height}', '180')
                 : video?.thumbnail_url.replace('%{width}', '320').replace('%{height}', '180')
             }
+            loading="lazy"
+            width={320}
+            height={180}
             alt="Your alt text"
           />
         </span>
