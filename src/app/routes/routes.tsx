@@ -1,6 +1,6 @@
 import { lazy } from 'react'
 import { ProtectedSign } from '@/features/auth/protectedSign'
-import { Streamer } from '@/pages/streamer'
+import { loader, Streamer, userIdLoader } from '@/pages/streamer'
 import { getEmotes, getTopGames, getUserById, getUserClips } from '@/shared/api/twitchApi/axios'
 import { createBrowserRouter, Navigate, redirect, RouterProvider } from 'react-router-dom'
 
@@ -11,7 +11,7 @@ import SignUp from '@/components/auth/sign-up'
 import { queryClient } from '@/components/providers/tanstack-query'
 import Layout from '@/app/routes/layout'
 
-import { Home  } from '../../pages/home'
+import { Home } from '../../pages/home'
 import { PATH } from './path-constants'
 
 export default function Routes() {
@@ -24,15 +24,18 @@ export default function Routes() {
           // loader: () => loader(),
           element: <Home />,
           async lazy() {
-            let { loader,Home } = await import('../../pages/home')
+            let { loader, Home } = await import('../../pages/home')
             return { loader: loader(queryClient) as any, Component: Home }
           },
         },
         {
           path: PATH.STREAMER,
+          // loader: () => loader(queryClient),
           async lazy() {
-            let { Streamer } = await import('../../pages/streamer')
-            return { Component: Streamer }
+            // let { Streamer } = await import('../../pages/streamer')
+            // return { Component: Streamer }
+            let { loader, Streamer } = await import('../../pages/streamer')
+            return { loader: loader(queryClient), Component: Streamer }
           },
         },
         {
