@@ -1,7 +1,7 @@
 import { lazy } from 'react'
 import { getTopGames } from '@/shared/api/twitchApi/axios'
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
-import { QueryClient, queryOptions, useSuspenseQuery } from '@tanstack/react-query'
+import { QueryClient, queryOptions } from '@tanstack/react-query'
 import { ScrollRestoration, useLoaderData } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'

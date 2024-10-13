@@ -1,56 +1,13 @@
-import { getUserByIId, getUserEm } from '@/pages/streamer'
-import { getEmotes, getUserById } from '@/shared/api/twitchApi/axios'
-import { QueryClient, queryOptions, useSuspenseQuery } from '@tanstack/react-query'
-import { LoaderFunctionArgs, useParams } from 'react-router-dom'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { useParams } from 'react-router-dom'
 
 import { useUserById, useUserEmotes } from '@/hooks/query/user'
-
-// const getUserByIId = (id: string) =>
-//   queryOptions({
-//     queryKey: ['user', id],
-//     queryFn: () => getUserById(id),
-//     enabled: !!id,
-//     refetchOnMount: false,
-//     refetchOnWindowFocus: false,
-//     staleTime: 60000,
-//     retry: 0,
-//   })
-
-// const getUserEm = (id: string) =>
-//   queryOptions({
-//     queryKey: ['userEmotes', id],
-//     queryFn: () => getEmotes(id),
-//     enabled: !!id,
-//     refetchOnMount: false,
-//     refetchOnWindowFocus: false,
-//     staleTime: 60000,
-//     retry: 0,
-//   })
-
-// export const userIdLoader =
-//   (queryClient: QueryClient) =>
-//   async ({ params }: LoaderFunctionArgs) => {
-//     if (!params.id) {
-//       console.log(params.id)
-//       throw new Error('No contact ID provided')
-//     }
-//     const id = params.id
-
-//     const user = await queryClient.ensureQueryData(getUserByIId(id))
-//     // const emotes = await queryClient.ensureQueryData(getUserEm(id))
-//     return user
-//   }
 
 export default function StreamerInfo() {
   const { id } = useParams()
   if (!id) return
-  // const { contactId } = useLoaderData() as Awaited<
-  //     ReturnType<ReturnType<typeof loader>>
-  //   >
-  // const { data: user } = useUserById(id)
-  // const { data: emotes } = useUserEmotes(id)
-  const { data: user } = useSuspenseQuery(getUserByIId(id))
-  const { data: emotes } = useSuspenseQuery(getUserEm(id))
+  const { data: user } = useSuspenseQuery(useUserById(id))
+  const { data: emotes } = useSuspenseQuery(useUserEmotes(id))
 
   const getRandomPosition = () => ({
     top: `${Math.random() * 32}vh`,
@@ -83,14 +40,14 @@ export default function StreamerInfo() {
           </h2>
         </div>
         <div className="mt-5 flex items-center justify-center rounded-2xl border-[3px] border-border md:flex-col">
-          {/* <iframe
+          <iframe
             className="relative h-[68vh] w-[70vw] rounded-2xl pr-2 lg:h-[58vh] lg:w-[75vw] md:h-[50vh] md:w-[96vw] md:pb-1 md:pr-0 sm:h-[30vh]"
             src={`https://player.twitch.tv/?channel=${user?.login}&autoplay=1&muted=1&parent=localhost&parent=tritch-vite.vercel.app`}
           ></iframe>
           <iframe
             className=" h-[68vh] w-[18vw] rounded-2xl lg:h-[58vh] lg:w-[21vw] md:h-[42vh] md:w-[96vw] "
             src={`https://www.twitch.tv/embed/${user?.login}/chat?parent=localhost&parent=tritch-vite.vercel.app&darkpopout`}
-          ></iframe> */}
+          ></iframe>
         </div>
       </section>
     </>

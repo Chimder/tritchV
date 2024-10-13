@@ -1,8 +1,5 @@
-import { lazy } from 'react'
 import { ProtectedSign } from '@/features/auth/protectedSign'
-import { loader, Streamer, userIdLoader } from '@/pages/streamer'
-import { getEmotes, getTopGames, getUserById, getUserClips } from '@/shared/api/twitchApi/axios'
-import { createBrowserRouter, Navigate, redirect, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import ReqResPassword from '@/components/auth/reqResPass'
 import ResetPassword from '@/components/auth/resetPassword'
@@ -21,7 +18,6 @@ export default function Routes() {
       children: [
         {
           path: PATH.HOME,
-          // loader: () => loader(),
           element: <Home />,
           async lazy() {
             let { loader, Home } = await import('../../pages/home')
@@ -30,10 +26,7 @@ export default function Routes() {
         },
         {
           path: PATH.STREAMER,
-          // loader: () => loader(queryClient),
           async lazy() {
-            // let { Streamer } = await import('../../pages/streamer')
-            // return { Component: Streamer }
             let { loader, Streamer } = await import('../../pages/streamer')
             return { loader: loader(queryClient), Component: Streamer }
           },

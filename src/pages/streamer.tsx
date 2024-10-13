@@ -1,32 +1,11 @@
 import { lazy } from 'react'
-import { getEmotes, getUserById } from '@/shared/api/twitchApi/axios'
-import { QueryClient, queryOptions } from '@tanstack/react-query'
+import { QueryClient } from '@tanstack/react-query'
 import { LoaderFunctionArgs, ScrollRestoration, useLoaderData } from 'react-router-dom'
+
+import { useUserById, useUserEmotes } from '@/hooks/query/user'
 
 const StreamerInfo = lazy(() => import('@/components/streamer-info'))
 const StreamerVideos = lazy(() => import('@/components/streamer-video'))
-
-export const getUserByIId = (id: string) =>
-  queryOptions({
-    queryKey: ['user', id],
-    queryFn: () => getUserById(id),
-    enabled: !!id,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-    staleTime: 60000,
-    retry: 0,
-  })
-
-export const getUserEm = (id: string) =>
-  queryOptions({
-    queryKey: ['userEmotes', id],
-    queryFn: () => getEmotes(id),
-    enabled: !!id,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-    staleTime: 60000,
-    retry: 0,
-  })
 
 export const loader =
   (queryClient: QueryClient) =>
@@ -36,11 +15,11 @@ export const loader =
       throw new Error('No contact ID provided')
     }
     const id = params.id
-
-    const user = queryClient.ensureQueryData(getUserByIId(id))
-    const emotes = queryClient.ensureQueryData(getUserEm(id))
+    queryClient.ensureQueryData(useUserById(id))
+    queryClient.ensureQueryData(useUserEmotes(id))
     return id
   }
+
 export const Streamer = () => {
   const data = useLoaderData()
   return (

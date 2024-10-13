@@ -1,8 +1,8 @@
 import { getEmotes, getUserById, searchChannels } from '@/shared/api/twitchApi/axios'
-import { useQuery } from '@tanstack/react-query'
+import { queryOptions, useQuery } from '@tanstack/react-query'
 
 export function useUserById(id: string | undefined) {
-  return useQuery({
+  return queryOptions({
     queryKey: ['user', id],
     queryFn: () => getUserById(id),
     enabled: !!id,
@@ -13,7 +13,7 @@ export function useUserById(id: string | undefined) {
   })
 }
 export function useUserEmotes(id: string | undefined) {
-  return useQuery({
+  return queryOptions({
     queryKey: ['userEmotes', id],
     queryFn: () => getEmotes(id),
     enabled: !!id,
