@@ -15,41 +15,62 @@ import {
   TwitchVideoResponse,
 } from './types'
 
-let accessToken: string | null = null
-let tokenExpirationTime: number | null = null
-
-export async function getAccessToken(): Promise<string> {
-  if (accessToken && tokenExpirationTime && Date.now() < tokenExpirationTime) {
-    return accessToken
-  }
-
+async function getAccessToken(): Promise<string> {
   try {
+    const clientId = import.meta.env.VITE_PUBLIC_CLIENT_ID
     const clientSecret = import.meta.env.VITE_PUBLIC_CLIENT_SECRET
     const response: AxiosResponse<AccessTokenResponse> = await axios.post(
       'https://id.twitch.tv/oauth2/token',
       null,
       {
         params: {
-          client_id: import.meta.env.VITE_PUBLIC_CLIENT_ID,
+          client_id: clientId,
           client_secret: clientSecret,
           grant_type: 'client_credentials',
         },
       },
     )
 
-    console.log('TOKEWOEKOWEKOW')
-    accessToken = response.data.access_token
-    tokenExpirationTime = Date.now() + response.data.expires_in! * 1000
+    const newAccessToken = response.data.access_token
+    const expirationTime = Date.now() + response.data.expires_in! * 1000
 
-    return accessToken
+    localStorage.setItem('twitch_access_token', newAccessToken)
+    localStorage.setItem('twitch_token_expiration', expirationTime.toString())
+
+    return newAccessToken
   } catch (error) {
     console.error('Error fetching access token:', error)
-    throw error
+    throw new Error('Failed to retrieve access token')
   }
 }
 
+let token: string | null = null
+let tokenPromise: Promise<string> | null = null
+
+export async function fetchToken(): Promise<string> {
+  const savedToken = localStorage.getItem('twitch_access_token')
+  const savedExpiration = localStorage.getItem('twitch_token_expiration')
+
+  if (savedToken && savedExpiration && Date.now() < parseInt(savedExpiration)) {
+    token = savedToken
+    return token
+  }
+
+  if (tokenPromise) {
+    return tokenPromise
+  }
+
+  tokenPromise = getAccessToken().then(fetchedToken => {
+    token = fetchedToken
+    tokenPromise = null
+    return token
+  })
+
+  return tokenPromise
+}
+
 export async function searchChannels(searchQuery: string): Promise<Channel[]> {
-  const accessToken = await getAccessToken()
+  const accessToken = await fetchToken()
   try {
     const response: AxiosResponse<SearchChannelsResponse> = await axios.get(
       'https://api.twitch.tv/helix/search/channels',
@@ -73,7 +94,7 @@ export async function searchChannels(searchQuery: string): Promise<Channel[]> {
 }
 
 export async function getUserById(userId?: string): Promise<TwitchUser | null> {
-  const accessToken = await getAccessToken()
+  const accessToken = await fetchToken()
 
   try {
     const response = await axios.get<TwitchUserResponse>('https://api.twitch.tv/helix/users', {
@@ -98,7 +119,6 @@ export async function getCurrentStreamByUserId(
   userId: string,
   accessToken?: string,
 ): Promise<TwitchStream | null> {
-
   try {
     const response = await axios.get<TwitchStreamResponse>('https://api.twitch.tv/helix/streams', {
       params: {
@@ -123,7 +143,7 @@ export async function getVideosByUserId(
   cursor: string | null,
   type: 'offline' | 'stream' | 'clips',
 ): Promise<{ videos: TwitchVideo[]; nextCursor: string | null }> {
-  const accessToken = await getAccessToken()
+  const accessToken = await fetchToken()
 
   try {
     let url
@@ -154,7 +174,7 @@ export async function getVideosByUserId(
 }
 
 export async function getTopGames(): Promise<TopGame[]> {
-  const accessToken = await getAccessToken()
+  const accessToken = await fetchToken()
 
   try {
     const { data } = await axios.get('https://api.twitch.tv/helix/games/top', {
@@ -175,7 +195,7 @@ export async function getTopGames(): Promise<TopGame[]> {
 }
 
 export async function getTopStreamsByGame(gameId: string, type: string): Promise<TwitchCurrent[]> {
-  const accessToken = await getAccessToken()
+  const accessToken = await fetchToken()
 
   try {
     let url
@@ -204,7 +224,7 @@ export async function getTopStreamsByGame(gameId: string, type: string): Promise
 }
 
 export async function getEmotes(userId?: string): Promise<Emotes[]> {
-  const accessToken = await getAccessToken()
+  const accessToken = await fetchToken()
 
   try {
     const { data } = await axios.get('https://api.twitch.tv/helix/chat/emotes', {
@@ -225,7 +245,7 @@ export async function getEmotes(userId?: string): Promise<Emotes[]> {
 }
 
 export async function getUserClips(userId?: string): Promise<any> {
-  const accessToken = await getAccessToken()
+  const accessToken = await fetchToken()
 
   try {
     const { data } = await axios.get('https://api.twitch.tv/helix/clips', {
@@ -245,7 +265,7 @@ export async function getUserClips(userId?: string): Promise<any> {
   }
 }
 export async function getGameClips(): Promise<any> {
-  const accessToken = await getAccessToken()
+  const accessToken = await fetchToken()
 
   try {
     const { data } = await axios.get('https://api.twitch.tv/helix/clips', {
