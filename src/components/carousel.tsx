@@ -11,7 +11,8 @@ import { Thumb } from './carousel-Thumbs'
 import { Skeleton } from './ui/skeleton'
 
 type PropType = {
-  slides?: TopGame[]
+  // slides?: TopGame[]
+  slides?: any
 }
 
 const EmblaCarousel = ({ slides }: PropType) => {

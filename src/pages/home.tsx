@@ -1,41 +1,37 @@
 import { lazy } from 'react'
 import { getTopGames } from '@/shared/api/twitchApi/axios'
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
-import { useQuery } from '@tanstack/react-query'
+import { QueryClient, queryOptions, useSuspenseQuery } from '@tanstack/react-query'
 import { ScrollRestoration, useLoaderData } from 'react-router-dom'
 
-import { useGamesData } from '@/hooks/query/games'
 import { Button } from '@/components/ui/button'
 import { DialogInput } from '@/components/dialog-input'
 
 const EmblaCarousel = lazy(() => import('@/components/carousel'))
 
-const getTopGamesLoads = () => ({
-  queryKey: ['games'],
-  queryFn: async () => getTopGames(),
-  refetchOnMount: false,
-  refetchOnWindowFocus: false,
-  staleTime: 30000,
-  retry: 0,
-})
+const getTopGamesLoads = () =>
+  queryOptions({
+    queryKey: ['games'],
+    queryFn: () => getTopGames(),
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    staleTime: 30000,
+    retry: 0,
+  })
 
-// export const loader = () => {
-//   console.log('ROUTERRRR load')
-//   // const data = await getTopGames()
-//   return getTopGames()
-// }
-// export const loader = (queryClient: any) => async () => {
-//   console.log('ROUTERRRR load')
-//   const query = getTopGamesLoads()
-//   return queryClient.getQueryData(query.queryKey) ?? (await queryClient.fetchQuery(query))
-// }
+export const loader = (queryClient: QueryClient) => async () => {
+  const data = await queryClient.ensureQueryData(getTopGamesLoads())
+  return data
+}
+
 export function Home() {
-  // const { data: games } = useQuery(getTopGamesLoads())
   const games = useLoaderData()
 
-  console.log(games)
-  // if (!games) return <>no data</>
+  // const { data: games } = useSuspenseQuery(getTopGamesLoads())
 
+  console.log('Load', games)
+  // return
+  if (!games) return <>no data</>
   return (
     <main className="h-[2000px] overflow-hidden">
       <ScrollRestoration />
@@ -61,7 +57,7 @@ export function Home() {
         <div>
           <h1 className="pb-3 text-7xl text-white xl:text-6xl md:text-4xl">Top streams Now</h1>
         </div>
-        <EmblaCarousel slides={games!} />
+        <EmblaCarousel slides={games} />
       </section>
     </main>
   )

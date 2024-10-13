@@ -8,8 +8,10 @@ import ReqResPassword from '@/components/auth/reqResPass'
 import ResetPassword from '@/components/auth/resetPassword'
 import SignIn from '@/components/auth/sign-in'
 import SignUp from '@/components/auth/sign-up'
+import { queryClient } from '@/components/providers/tanstack-query'
 import Layout from '@/app/routes/layout'
 
+import { Home  } from '../../pages/home'
 import { PATH } from './path-constants'
 
 export default function Routes() {
@@ -19,12 +21,11 @@ export default function Routes() {
       children: [
         {
           path: PATH.HOME,
-          loader: () => getTopGames(),
+          // loader: () => loader(),
+          element: <Home />,
           async lazy() {
-            // let { loader, Home } = await import('../../pages/home')
-            // return { loader: loader, Component: Home }
-            let { Home } = await import('../../pages/home')
-            return { Component: Home }
+            let { loader,Home } = await import('../../pages/home')
+            return { loader: loader(queryClient) as any, Component: Home }
           },
         },
         {
