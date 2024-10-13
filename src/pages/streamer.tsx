@@ -1,8 +1,9 @@
-import { lazy } from 'react'
+import { lazy, Suspense } from 'react'
 import { QueryClient } from '@tanstack/react-query'
 import { LoaderFunctionArgs, ScrollRestoration, useLoaderData } from 'react-router-dom'
 
 import { useUserById, useUserEmotes } from '@/hooks/query/user'
+import Loading from '@/components/loading'
 
 const StreamerInfo = lazy(() => import('@/components/streamer-info'))
 const StreamerVideos = lazy(() => import('@/components/streamer-video'))
@@ -21,12 +22,14 @@ export const loader =
   }
 
 export const Streamer = () => {
-  const data = useLoaderData()
+  // const data = useLoaderData()
   return (
-    <article className="overflow-hidden">
-      <ScrollRestoration />
-      <StreamerInfo />
-      <StreamerVideos />
-    </article>
+    <Suspense fallback={<Loading />}>
+      <article className="overflow-hidden">
+        <ScrollRestoration />
+        <StreamerInfo />
+        <StreamerVideos />
+      </article>
+    </Suspense>
   )
 }
