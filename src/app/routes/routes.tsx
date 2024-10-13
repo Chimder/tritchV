@@ -19,7 +19,10 @@ export default function Routes() {
       children: [
         {
           path: PATH.HOME,
+          loader: () => getTopGames(),
           async lazy() {
+            // let { loader, Home } = await import('../../pages/home')
+            // return { loader: loader, Component: Home }
             let { Home } = await import('../../pages/home')
             return { Component: Home }
           },

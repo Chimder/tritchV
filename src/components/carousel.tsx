@@ -11,10 +11,11 @@ import { Thumb } from './carousel-Thumbs'
 import { Skeleton } from './ui/skeleton'
 
 type PropType = {
-  slides: TopGame[]
+  slides?: TopGame[]
 }
 
 const EmblaCarousel = ({ slides }: PropType) => {
+  if (!slides) return
   const params = useParams()
 
   const id = params?.id as string
