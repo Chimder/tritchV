@@ -44,8 +44,8 @@ export default function ResetPassword() {
     mutationFn: ({ newPassword }: { newPassword: string }) =>
       authControllerPasswordReset({ newPassword: newPassword, token: param?.token as string }),
     onSuccess: () => {
-      navigate(`${PATH.HOME}`)
       queryClient.refetchQueries({ queryKey: ['account'] })
+      navigate(`${PATH.HOME}`)
     },
     onError: () => {
       form.setError('newPassword', {

@@ -48,8 +48,8 @@ export default function SignUp() {
     mutationFn: ({ email, password, name }: { email: string; password: string; name: string }) =>
       authControllerSingUp({ email: email, password: password, name: name }),
     onSuccess: () => {
-      navigate(`${PATH.HOME}`)
       queryClient.refetchQueries({ queryKey: ['account'] })
+      navigate(`${PATH.HOME}`)
     },
     onError: () => {
       form.setError('email', {
