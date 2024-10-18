@@ -26,10 +26,8 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "embla-carousel-react": "8.0.0-rc22",
-    "eslint-plugin-react-compiler": "0.0.0-experimental-92aaa43-20240919",
     "framer-motion": "^11.5.2",
     "next-themes": "^0.2.1",
-    "prettier-plugin-tailwindcss": "^0.5.14",
     "react": "19.0.0-rc-e740d4b1-20240919",
     "react-dom": "19.0.0-rc-e740d4b1-20240919",
     "react-hook-form": "^7.53.0",
@@ -41,7 +39,10 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "prettier-plugin-tailwindcss": "^0.5.14",
     "@ianvs/prettier-plugin-sort-imports": "^4.3.1",
+    "eslint-plugin-react-compiler": "0.0.0-experimental-92aaa43-20240919",
     "@types/node": "^20.16.4",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
