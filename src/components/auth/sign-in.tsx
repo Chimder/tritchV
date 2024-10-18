@@ -1,4 +1,3 @@
-import { useTransition } from 'react'
 import { useAccountInfo } from '@/features/auth/useSession'
 import { authControllerSingIn } from '@/shared/api/swagger/generated'
 import { cn } from '@/shared/lib/utils'

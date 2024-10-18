@@ -1,7 +1,7 @@
-import React from 'react'
+// import React from 'react'
 
-type Props = {}
+// type Props = {}
 
-export default function singOut({}: Props) {
+export default function singOut() {
   return <div>sing-out</div>
 }
