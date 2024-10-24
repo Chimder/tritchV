@@ -1,4 +1,4 @@
-import { PropsWithChildren, useEffect, useState } from 'react'
+import { PropsWithChildren, useState } from 'react'
 import { useDebouncedValue } from '@mantine/hooks'
 import { DotFilledIcon, ReloadIcon } from '@radix-ui/react-icons'
 import { motion } from 'framer-motion'
@@ -14,13 +14,7 @@ export function DialogInput({ children }: PropsWithChildren) {
   const [searchQuery, setSearchQuery] = useState<string>('')
   const [debouncedSearchQuery] = useDebouncedValue(searchQuery, 500)
 
-  const { data: searchResults, refetch, isFetching } = useSearchInput(debouncedSearchQuery)
-
-  useEffect(() => {
-    if (debouncedSearchQuery) {
-      refetch()
-    }
-  }, [debouncedSearchQuery])
+  const { data: searchResults, isFetching } = useSearchInput(debouncedSearchQuery)
 
   return (
     <Dialog>

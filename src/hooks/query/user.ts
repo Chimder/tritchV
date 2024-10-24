@@ -1,5 +1,5 @@
 import { getEmotes, getUserById, searchChannels } from '@/shared/api/twitchApi/axios'
-import { queryOptions, useQuery } from '@tanstack/react-query'
+import { keepPreviousData, queryOptions, useQuery } from '@tanstack/react-query'
 
 export function useUserById(id: string | undefined) {
   return queryOptions({
@@ -30,5 +30,9 @@ export function useSearchInput(debouncedSearchQuery: string) {
     queryFn: async () => searchChannels(debouncedSearchQuery),
     enabled: !!debouncedSearchQuery,
     refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    placeholderData: keepPreviousData,
+    staleTime: 30000,
+    retry: 0,
   })
 }
