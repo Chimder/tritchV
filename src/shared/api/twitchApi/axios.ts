@@ -15,7 +15,7 @@ import type {
   TwitchVideoResponse,
 } from './types'
 
-async function getAccessToken(): Promise<string> {
+export async function getAccessToken(): Promise<string> {
   try {
     const clientId = import.meta.env.VITE_PUBLIC_CLIENT_ID
     const clientSecret = import.meta.env.VITE_PUBLIC_CLIENT_SECRET

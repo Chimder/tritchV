@@ -21,7 +21,7 @@ export default function Routes() {
           element: <Home />,
           async lazy() {
             let { loader, Home } = await import('../../pages/home')
-            return { loader: loader(queryClient) as any, Component: Home }
+            return { loader: loader(queryClient), Component: Home }
           },
         },
         {

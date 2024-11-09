@@ -26,7 +26,6 @@ export const loader = (queryClient: QueryClient) => async () => {
 }
 
 export function Home() {
-  // const games = useLoaderData()
 
   const { data: games } = useSuspenseQuery(getTopGamesLoads())
 
