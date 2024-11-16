@@ -1,5 +1,5 @@
 import { PropsWithChildren, useState } from 'react'
-import { useDebouncedValue } from '@mantine/hooks'
+import { useDebounce } from 'use-debounce'
 import { DotFilledIcon, ReloadIcon } from '@radix-ui/react-icons'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
@@ -12,7 +12,7 @@ import { Input } from './ui/input'
 export function DialogInput({ children }: PropsWithChildren) {
   const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState<string>('')
-  const [debouncedSearchQuery] = useDebouncedValue(searchQuery, 500)
+  const [debouncedSearchQuery] = useDebounce(searchQuery, 500)
 
   const { data: searchResults, isFetching } = useSearchInput(debouncedSearchQuery)
 
